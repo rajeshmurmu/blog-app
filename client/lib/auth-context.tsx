@@ -32,11 +32,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken")
         const refreshToken = localStorage.getItem("refreshToken")
-        const storedToken = { accessToken, refreshToken }
         const storedUser = localStorage.getItem("authUser")
 
-        if (storedToken && storedUser) {
-            setToken(storedToken)
+        // Only restore if both tokens AND user exist
+        if (accessToken && refreshToken && storedUser) {
+            setToken({ accessToken, refreshToken })
             setUser(JSON.parse(storedUser))
         }
         setIsLoading(false)
@@ -98,7 +98,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = () => {
         setUser(null)
         setToken(null)
-        localStorage.removeItem("authToken")
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
         localStorage.removeItem("authUser")
     }
 
