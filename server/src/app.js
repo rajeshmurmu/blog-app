@@ -10,7 +10,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://blog-pc2b4v2f5-rajesh-murmus-projects.vercel.app",
+      "https://blog-app-delta-flax.vercel.app",
+      "https://varcel.app",
+    ],
     credentials: true,
   })
 );
