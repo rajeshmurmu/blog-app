@@ -1,0 +1,66 @@
+@baseUrl = http://localhost:5000
+
+@authToken = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbWhhNzN4N2owMDAweXF0emlkMHBiYmR1IiwiZW1haWwiOiJtdW5zaGkwM0BnbWFpbC5jb20iLCJpYXQiOjE3NjE2NzMyNzMsImV4cCI6MTc2MTY3Mzg3M30.gqoxohGAK0MzciZJ-lCaXo_ePd1qfcvHu7vBhG0lbO0
+
+### base url
+GET {{baseUrl}}
+
+### register route
+POST {{baseUrl}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "rajesh@example.com",
+    "password": "password123",
+    "confirmPassword": "password123"
+}
+
+
+### login route
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "rajesh@example.com",
+    "password": "password123",
+    "confirmPassword": "password123"
+}
+
+### logout route
+GET  {{baseUrl}}/api/v1/auth/logout
+Authorization:{{authToken}}
+
+
+### get all posts
+GET  {{baseUrl}}/api/v1/posts
+
+### create a new post
+POST  {{baseUrl}}/api/v1/posts
+Content-Type: application/json
+Authorization:{{authToken}}
+
+{
+    "title": "My First Post",
+    "content": "This is the content of my first post."
+}
+
+
+### posts routes
+
+### get all posts
+GET  {{baseUrl}}/api/v1/posts
+
+### get a single post
+GET  {{baseUrl}}/api/v1/posts/693344e1f5aa6a0ce4568173
+
+
+### create a new post with image
+POST  {{baseUrl}}/api/v1/posts
+Content-Type: multipart/form-data
+Authorization:{{authToken}}
+Key: title, Value: My First Post with Image
+Key: content, Value: This is the content of my first post with image.
+Key: image, Value: (select a file)
+
