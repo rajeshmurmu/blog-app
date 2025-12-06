@@ -37,7 +37,7 @@ export function Navbar() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <Link href="/" className="font-bold text-xl text-primary">
-                        BlogSpace
+                        DevBlogs
                     </Link>
 
                     {/* Desktop Navigation */}

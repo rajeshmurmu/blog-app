@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BlogSpace",
+  title: "DevBlogs - Share and Discover Tech Blogs",
   description: "Share your thoughts and read amazing blogs",
   icons: {
     icon: [
