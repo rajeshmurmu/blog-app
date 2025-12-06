@@ -1,5 +1,4 @@
 import express from "express";
-import config from "./config/conf.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -11,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: config.clientUrl,
+    origin: ["*"],
     credentials: true,
   })
 );
