@@ -89,6 +89,10 @@ export default function ProfilePage() {
         )
     }
 
+    if (isLoading) {
+        return <LoadingState loadingText="Loading your posts..." />
+    }
+
     return (
         <div className="min-h-screen flex flex-col bg-background">
             <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-12">

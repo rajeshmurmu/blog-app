@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
@@ -10,9 +10,12 @@ import { RegisterSchema, registerSchema } from "@/lib/auth-schema"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Eye, EyeOff, Lock, User } from "lucide-react"
 import { useAuth } from "@/lib/auth-context"
+import { useRouter } from "next/navigation"
 
 export default function RegisterPage() {
-    const { register } = useAuth()
+    const { register, user } = useAuth()
+    const router = useRouter()
+
     const form = useForm({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -39,6 +42,13 @@ export default function RegisterPage() {
             form.reset()
         }
     }
+
+
+    useEffect(() => {
+        if (user?._id) {
+            router.push("/")
+        }
+    }, [router, user?._id])
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-background p-4">

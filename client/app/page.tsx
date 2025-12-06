@@ -5,6 +5,7 @@ import { PostCard } from "@/components/post-card"
 import { SearchBar } from "@/components/search-bar"
 import { Pagination } from "@/components/pagination"
 import { fetchPosts } from "@/lib/apiClient"
+import LoadingState from "@/components/loading-state"
 
 export interface Post {
   _id: string
@@ -74,6 +75,10 @@ export default function Home() {
 
   const hasNextPage = pagination.currentPage * pagination.limit < pagination.total
   const hasPrevPage = pagination.currentPage > 1
+
+  if (isLoading) {
+    return <LoadingState loadingText="Please wait while we fetch the latest posts" />
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
