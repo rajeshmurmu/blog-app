@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { PostForm } from "@/components/post-form"
 import { useAuth } from "@/lib/auth-context"
-import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 import { Post } from "@/app/page"
 import toast from "react-hot-toast"
@@ -89,10 +88,10 @@ export default function EditPostPage() {
         return (
             <div className="min-h-screen flex flex-col bg-background">
                 <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-12">
-                    <Link href="/" className="inline-flex items-center text-primary hover:underline mb-6">
+                    <button onClick={() => router.back()} className="inline-flex items-center text-primary hover:underline mb-6">
                         <ChevronLeft size={18} className="mr-1" />
                         Back
-                    </Link>
+                    </button>
                     <div className="bg-destructive/10 text-destructive p-6 rounded-lg">
                         <p className="text-lg font-medium">{error}</p>
                     </div>
@@ -104,10 +103,10 @@ export default function EditPostPage() {
     return (
         <div className="min-h-screen flex flex-col bg-background">
             <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-12">
-                <Link href={`/posts/${post?.slug}?post_id=${postId}`} className="inline-flex items-center text-primary hover:underline mb-8">
+                <button onClick={() => router.back()} className="inline-flex items-center text-primary hover:underline mb-8">
                     <ChevronLeft size={18} className="mr-1" />
                     Back to Post
-                </Link>
+                </button>
 
                 <h1 className="text-3xl font-bold mb-8">Edit Post</h1>
 

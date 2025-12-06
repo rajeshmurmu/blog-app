@@ -12,6 +12,7 @@ import Image from "next/image"
 import { X } from "lucide-react"
 import { useCallback, useEffect } from "react"
 import { generateSlug } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 interface PostFormProps {
     initialData?: {
@@ -31,6 +32,7 @@ export function PostForm({
     onSubmit,
     mode = "create",
 }: PostFormProps) {
+    const router = useRouter()
     const form = useForm(
         {
             resolver: zodResolver(createPostSchema),
@@ -230,7 +232,7 @@ export function PostForm({
                                     : "Update Post"}
                         </Button>
                         <Button type="button" variant="outline" disabled={form.formState.isSubmitting} asChild>
-                            <Link href={mode === "create" ? "/" : `/posts/${initialData.slug}?post_id=${initialData._id}`}>{mode === "create" ? "Cancel" : "Back"}</Link>
+                            <button onClick={() => router.back()}>{mode === "create" ? "Cancel" : "Back"}</button>
                         </Button>
                     </div>
                 </div>

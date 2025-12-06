@@ -62,7 +62,7 @@ export default function PostDetailPage() {
             }
 
             toast.success("Post deleted successfully!")
-            router.push("/")
+            router.replace("/")
         } catch (err) {
             const message = err instanceof AxiosError ? err.response?.data?.message : "Failed to delete post"
             toast.error(message)
@@ -97,10 +97,10 @@ export default function PostDetailPage() {
         return (
             <div className="min-h-screen flex flex-col bg-background">
                 <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-12">
-                    <Link href="/" className="inline-flex items-center text-primary hover:underline mb-6">
+                    <button onClick={() => router.back()} className="inline-flex items-center text-primary hover:underline mb-6">
                         <ChevronLeft size={18} className="mr-1" />
                         Back to Posts
-                    </Link>
+                    </button>
                     <div className="bg-destructive/10 text-destructive p-6 rounded-lg">
                         <p className="text-lg font-medium">{error || "Post not found"}</p>
                     </div>
@@ -112,10 +112,10 @@ export default function PostDetailPage() {
     return (
         <div className="min-h-screen flex flex-col bg-background">
             <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-12">
-                <Link href="/" className="inline-flex items-center text-primary hover:underline mb-8">
+                <button onClick={() => router.back()} className="inline-flex items-center text-primary hover:underline mb-8">
                     <ChevronLeft size={18} className="mr-1" />
                     Back to Posts
-                </Link>
+                </button>
 
                 <article className="bg-card rounded-lg shadow-md overflow-hidden">
                     {/* Header with Title */}
