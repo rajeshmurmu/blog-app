@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { useForm, useWatch } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ACCEPTED_IMAGE_TYPES, CreatePostSchema, createPostSchema } from "@/lib/post-schema"
