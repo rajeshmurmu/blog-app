@@ -2,15 +2,15 @@ const _conf = {
   port: process.env.PORT || 3000,
   mongodbUri: process.env.MONGODB_URI || "mongodb://localhost:27017/blogapp",
   jwtSecret: process.env.JWT_SECRET || "secret",
-  clientUrl: process.env.CLIENT_URL || "http://localhost:3000",
+  clientUrl: process.env.CLIENT_URL,
 };
 
 const config = Object.freeze(_conf);
 
 export const cookieOptions = Object.freeze({
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  secure: true,
+  sameSite: "none",
   maxAge: 24 * 60 * 60 * 1000, // 1 day
 });
 

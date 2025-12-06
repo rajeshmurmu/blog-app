@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -11,9 +12,10 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "https://blog-pc2b4v2f5-rajesh-murmus-projects.vercel.app",
-      "https://blog-app-delta-flax.vercel.app",
-      "https://varcel.app",
+      "http://localhost:3000",
+      "http://localhost:4173",
+      "http://localhost:5173",
+      config.clientUrl,
     ],
     credentials: true,
   })
@@ -34,6 +36,7 @@ app.use("/api/v1/posts", postRoutes);
 
 // user routes
 import userRoutes from "./routes/user.routes.js";
+import config from "./config/conf.js";
 app.use("/api/v1/users", userRoutes);
 
 // Error handling middleware
