@@ -1,6 +1,7 @@
 import { ZodError } from "zod";
 import { createPostSchema } from "../utils/post.schema.js";
 import Post from "../models/post.model.js";
+import { PER_PAGE_LIMIT } from "../config/conf.js";
 import {
   deleteAllImageWithFolder,
   deleteImageFromCloudinary,
@@ -11,9 +12,53 @@ import fs from "fs/promises";
 
 export const getPostsController = async (req, res) => {
   try {
-    const posts = await Post.find().populate("author", "username email name");
-    return res.status(200).json({ success: true, posts });
+    let page = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || PER_PAGE_LIMIT;
+    const skip = (page - 1) * limit;
+    const search = req.query.search || "";
+
+    if (page < 1 || limit < 1) {
+      page = 1;
+      limit = PER_PAGE_LIMIT;
+    }
+
+    // const posts = await Post.find().populate("author", "username email name");
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          $or: [
+            { title: { $regex: search, $options: "i" } },
+            { content: { $regex: search, $options: "i" } },
+          ],
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      { $skip: skip },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: "users",
+          localField: "author",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      { $unwind: "$author" },
+      {
+        $project: {
+          "author.password": 0,
+        },
+      },
+    ]);
+
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / limit);
+
+    return res
+      .status(200)
+      .json({ success: true, posts, totalPages, totalPosts });
   } catch (error) {
+    console.log("getPostsController::Error ", error);
     return res.status(500).json({ error: "Failed to fetch posts" });
   }
 };

@@ -6,6 +6,7 @@ import { SearchBar } from "@/components/search-bar"
 import { Pagination } from "@/components/pagination"
 import { fetchPosts } from "@/lib/apiClient"
 import LoadingState from "@/components/loading-state"
+import { useRouter } from "next/navigation"
 
 export interface Post {
   _id: string
@@ -28,6 +29,7 @@ interface PaginationInfo {
 }
 
 export default function Home() {
+  const router = useRouter()
   const [posts, setPosts] = useState<Post[]>([])
   const [pagination, setPagination] = useState<PaginationInfo>({
     currentPage: 1,
@@ -42,8 +44,14 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchAllPosts() {
+      const params = new URLSearchParams({
+        search: searchQuery,
+        page: pagination.currentPage.toString(),
+        limit: pagination.limit.toString(),
+      })
+      router.replace(`?${params}`)
       setIsLoading(true)
-      const allPosts = await fetchPosts()
+      const allPosts = await fetchPosts({ params })
 
       if (allPosts?.data?.success) {
         setPosts(allPosts.data.posts)
@@ -58,19 +66,24 @@ export default function Home() {
       setIsLoading(false)
     }
     fetchAllPosts()
-  }, [])
+  }, [pagination.currentPage, pagination.limit, router, searchQuery])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
-    // fetchPosts(1, query)
   }
 
   const handleNextPage = () => {
-    // fetchPosts(pagination.currentPage + 1, searchQuery)
+    setPagination((prev) => ({
+      ...prev,
+      currentPage: prev.currentPage + 1,
+    }))
   }
 
   const handlePrevPage = () => {
-    // fetchPosts(pagination.currentPage - 1, searchQuery)
+    setPagination((prev) => ({
+      ...prev,
+      currentPage: prev.currentPage === 1 ? 1 : prev.currentPage - 1,
+    }))
   }
 
   const hasNextPage = pagination.currentPage * pagination.limit < pagination.total

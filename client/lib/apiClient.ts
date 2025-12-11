@@ -9,18 +9,18 @@ const apiClient = axios.create({
 });
 
 // Add an interceptor to set authorization header with user token before requests
-apiClient.interceptors.request.use(
-  function (config) {
-    // Retrieve user token from local storage
-    const token = localStorage.getItem("accessToken");
-    // Set authorization header with bearer token
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
+// apiClient.interceptors.request.use(
+//   function (config) {
+//     // Retrieve user token from local storage
+//     const token = localStorage.getItem("accessToken");
+//     // Set authorization header with bearer token
+//     config.headers.Authorization = `Bearer ${token}`;
+//     return config;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
 
 export const registerUser = async ({
   name,
@@ -68,9 +68,9 @@ export const logoutUser = async () => {
   }
 };
 
-export const fetchPosts = async () => {
+export const fetchPosts = async ({ params }: { params?: URLSearchParams }) => {
   try {
-    const response = await apiClient.get("/posts");
+    const response = await apiClient.get(`/posts?${params}`);
     return response;
   } catch (error) {
     throw error;
