@@ -5,7 +5,6 @@ import { Trash2, Edit } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Post } from "@/app/page"
 import Image from "next/image"
-import parse from "html-react-parser"
 
 
 
@@ -42,7 +41,9 @@ export function ProfilePostCard({ post, onEdit, onDelete }: ProfilePostCardProps
                         </div>
                     )}
                 </div>
-                <div className="text-sm text-muted-foreground my-4 line-clamp-2">{parse(truncatedContent)}...</div>
+                <div className="prose text-sm text-muted-foreground my-4 line-clamp-2">
+                    <div dangerouslySetInnerHTML={{ __html: truncatedContent || "" }}></div>
+                </div>
 
                 <div className="flex justify-between items-center text-xs text-muted-foreground mb-4 pb-4 border-b border-border">
                     <span>{formatDate(post.createdAt)}</span>

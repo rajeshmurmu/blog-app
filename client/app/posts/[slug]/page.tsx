@@ -13,7 +13,6 @@ import { Post } from "@/app/page"
 import { deletePost, fetchPostById } from "@/lib/apiClient"
 import toast from "react-hot-toast"
 import { AxiosError } from "axios"
-import parse from "html-react-parser"
 
 
 export default function PostDetailPage() {
@@ -175,8 +174,8 @@ export default function PostDetailPage() {
                     {/* Content */}
                     <div className="p-6">
                         <div className="prose prose-lg max-w-none">
-                            {/* <div dangerouslySetInnerHTML={{ __html: post.content || "" }}></div> */}
-                            {parse(post.content || "")}
+                            <div dangerouslySetInnerHTML={{ __html: post.content || "" }}></div>
+                            {/* {parse(post.content || "")} */}
                         </div>
                     </div>
                 </article>
