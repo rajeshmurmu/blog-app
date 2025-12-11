@@ -6,12 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ACCEPTED_IMAGE_TYPES, CreatePostSchema, createPostSchema } from "@/lib/post-schema"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "./ui/form"
 import { Input } from "./ui/input"
-import { Textarea } from "./ui/textarea"
 import Image from "next/image"
 import { X } from "lucide-react"
 import { useCallback, useEffect } from "react"
 import { generateSlug } from "@/lib/utils"
 import { useRouter } from "next/navigation"
+import RichTextEditor from "./rich-text-editor"
 
 interface PostFormProps {
     initialData?: {
@@ -198,7 +198,7 @@ export function PostForm({
                     {/* Content Field */}
                     <div>
                         {/* Content */}
-                        <FormField
+                        {/* <FormField
                             control={form.control}
                             name="content"
                             render={({ field }) => (
@@ -215,8 +215,14 @@ export function PostForm({
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
+                        /> */}
 
+                        <RichTextEditor
+                            name="content"
+                            control={form.control}
+                            label="Content"
+                            defaultValue={initialData?.content || ""}
+                        />
                     </div>
 
                     {/* Form Actions */}

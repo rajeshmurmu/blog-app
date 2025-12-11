@@ -102,7 +102,7 @@ export default function EditPostPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-12">
+            <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-12">
                 <button onClick={() => router.back()} className="inline-flex items-center text-primary hover:underline mb-8">
                     <ChevronLeft size={18} className="mr-1" />
                     Back to Post

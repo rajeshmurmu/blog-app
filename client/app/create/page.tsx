@@ -14,7 +14,7 @@ export default function CreatePostPage() {
     const { isLoading } = useAuth()
 
     if (isLoading) {
-        <LoadingState />
+        return <LoadingState />
     }
 
     if (!isAuthenticated) {
@@ -52,7 +52,7 @@ export default function CreatePostPage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background">
-            <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-12">
+            <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-12">
                 <h1 className="text-3xl font-bold mb-8">Create a New Post</h1>
                 <PostForm onSubmit={handleSubmit} mode="create" />
             </main>

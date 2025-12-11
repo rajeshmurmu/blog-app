@@ -2,6 +2,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { formatDate } from "@/lib/utils"
 import { Post } from "@/app/page"
+import parse from "html-react-parser"
+
 
 
 
@@ -38,7 +40,7 @@ export function PostCard({ post }: PostCardProps) {
                 {/* Content */}
                 <div className="p-4 flex flex-col flex-1">
                     <h3 className="font-semibold text-lg mb-2 line-clamp-2 text-balance">{post.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{truncatedContent}</p>
+                    <div className="text-sm text-muted-foreground mb-4 line-clamp-2">{parse(truncatedContent)}...</div>
 
                     <div className="mt-auto pt-4 border-t border-border flex justify-between items-center text-xs text-muted-foreground">
                         <span>By {post.author.name}</span>
