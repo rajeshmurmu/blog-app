@@ -4,13 +4,13 @@ export const authenticate = (req, res, next) => {
   try {
     const access_token =
       req.cookies?.accessToken ||
-      req.headers?.Autohorization?.replace("Bearer ", "").trim();
+      req.headers?.Authorization?.replace("Bearer ", "").trim() ||
+      req.headers?.authorization?.replace("Bearer ", "").trim();
 
     if (!access_token)
       return res.status(401).json({ success: false, message: "unauthorized" });
 
     const is_authenticate = jwt.verify(access_token, process.env.JWT_SECRET);
-
     if (!is_authenticate) {
       return res.status(401).json({ success: false, message: "unauthorized" });
     }
