@@ -5,7 +5,6 @@ import { PostCard } from "@/components/post-card"
 import { SearchBar } from "@/components/search-bar"
 import { Pagination } from "@/components/pagination"
 import { fetchPosts } from "@/lib/apiClient"
-import LoadingState from "@/components/loading-state"
 import { useRouter } from "next/navigation"
 
 export interface Post {
@@ -49,7 +48,6 @@ export default function Home() {
         page: pagination.currentPage.toString(),
         limit: pagination.limit.toString(),
       })
-      router.replace(`?${params}`)
       setIsLoading(true)
       const allPosts = await fetchPosts({ params })
 
@@ -57,7 +55,7 @@ export default function Home() {
         setPosts(allPosts.data.posts)
         setPagination((prev) => ({
           ...prev,
-          total: allPosts.data.posts.length,
+          total: searchQuery === "" ? allPosts.data.totalPosts : allPosts.data?.posts?.length,
         }))
         setError("")
       } else {
@@ -66,10 +64,16 @@ export default function Home() {
       setIsLoading(false)
     }
     fetchAllPosts()
-  }, [pagination.currentPage, pagination.limit, router, searchQuery])
+  }, [pagination.currentPage, pagination.limit, searchQuery])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
+    setPagination({
+      currentPage: 1,
+      limit: 9,
+      total: 0,
+    })
+    router.replace(`/?search=${query}`)
   }
 
   const handleNextPage = () => {
@@ -89,9 +93,7 @@ export default function Home() {
   const hasNextPage = pagination.currentPage * pagination.limit < pagination.total
   const hasPrevPage = pagination.currentPage > 1
 
-  if (isLoading) {
-    return <LoadingState loadingText="Please wait while we fetch the latest posts" />
-  }
+
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -105,7 +107,7 @@ export default function Home() {
         {isLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-card rounded-lg h-80 animate-pulse" />
+              <div key={i} className="bg-muted rounded-lg h-80 animate-pulse border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col cursor-pointer" />
             ))}
           </div>
         )}
